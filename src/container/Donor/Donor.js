@@ -1,14 +1,29 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DatabaseActions from "../../Store/Actions/DatabaseActions";
+import NavBar from "../../Component/NavBar";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import Input from "@material-ui/core/Input";
+import Icon from '@material-ui/icons/Send';
+import Selector from '../../Component/Selector';
+import AuthActions from "../../Store/Actions/AuthActions";
 class Donor extends Component {
   constructor(props) {
     super(props);
     this.state = { numbInput: "", bloodGroupInput: "" };
   }
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.user) {
+      this.props.history.replace("/");
+    }
+  }
   inputHandler = event => {
     this.setState({ [event.target.name]: event.target.value });
+    
   };
+
   buttonHandler = () => {
     let donorInfo = {
       uid: this.props.user.uid,
@@ -18,57 +33,126 @@ class Donor extends Component {
       bloodGroup: this.state.bloodGroupInput
     };
     this.props.pushDonor(donorInfo);
-    this.setState({ numbInput: "", bloodGroupInput: "" });
+    this.setState({ numbInput: "", bloodGroupInput: "", openDrawer: false });
+  };
+  toggleDrawer = open => {
+    this.setState({ openDrawer: open });
+  };
+  listHandler = text => {
+    if (text == "Home") {
+      this.props.history.replace("/home");
+    } else if (text == "Donate Blood") {
+      this.props.history.replace("/donor");
+    } else {
+      console.log("from" + text);
+      this.props.history.replace("/needer");
+    }
   };
   render() {
+    console.log(this.state.bloodGroupInput);
     return (
       <div>
-        <h1> Donor</h1>
-        <button
-          onClick={() => {
-            this.props.history.replace("/needer");
-          }}
+        <NavBar
+          openDrawer={this.state.openDrawer}
+          toggleDrawer={this.toggleDrawer}
+          listHandler={this.listHandler}
+          userName={this.props.user?this.props.user.displayName:""}
+          signOut={this.props.signOutUser}
+        />
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          style={{ padding: 10 }}
         >
-          Need Blood
-        </button>
-        <br />
-        <button
-          onClick={() => {
-            this.props.history.replace("/home");
-          }}
+          <Grid item xs={8}>
+            <TextField
+              required
+              fullWidth
+              id="name"
+              label="Name"
+              className="nameInput"
+              disabled={true}
+              name="nameInput"
+              margin="normal"
+              value={this.props.user?this.props.user.displayName:""}
+            />
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          style={{ padding: 10 }}
         >
-          Home
-        </button>
-        <br />
-        <input
-          type="text"
-          disabled={true}
-          name="nameInput"
-          value={this.props.user.displayName}
-        />
-        <input
-          type="text"
-          disabled={true}
-          name="emailInput"
-          value={this.props.user.email}
-        />
-        <input
-          onChange={this.inputHandler}
-          placeholder="Enter phone number"
-          type="text"
-          disabled={false}
-          name="numbInput"
-          value={this.state.numbInput}
-        />
-        <input
-          onChange={this.inputHandler}
-          placeholder="Enter Blood Group"
-          type="text"
-          disabled={false}
-          name="bloodGroupInput"
-          value={this.state.bloodGroupInput}
-        />
-        <button onClick={this.buttonHandler}>Donate</button>
+          <Grid item xs={8}>
+            <TextField
+              required
+              fullWidth
+              id="email"
+              label="Email"
+              className="emailInput"
+              disabled={true}
+              name="emailInput"
+              margin="normal"
+              value={this.props.user?this.props.user.email:""}
+            />
+          </Grid>
+        </Grid>
+
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          style={{ padding: 10 }}
+        >
+          <Grid item xs={8}>
+            <TextField
+              required
+              fullWidth
+              id="numb"
+              label="Enter phone number"
+              className="emailInput"
+              disabled={false}
+              name="numbInput"
+              margin="normal"
+              onChange={this.inputHandler}
+              value={this.state.numbInput}
+            />
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          style={{ padding: 10 }}
+        >
+          <Grid item xs={8} >
+          <Selector valueInput={this.state.bloodGroupInput} name={"bloodGroupInput"} changeHandler={this.inputHandler} />
+        </Grid>
+        </Grid>
+        
+
+       
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          style={{ padding:10,  }} 
+        >
+          <Grid item xs={8}  >
+            <Button
+              variant="contained"
+              size="large"
+              color="primary"
+              style={{ backgroundColor: "#EF5350" }}
+              onClick={this.buttonHandler}
+            >
+            Donate Blood
+             <Icon ></Icon>
+            </Button>
+          </Grid>
+          </Grid>
       </div>
     );
   }
@@ -87,6 +171,9 @@ const mapDispatchToProps = dispatch => {
   return {
     pushDonor: donorPayload => {
       return dispatch(DatabaseActions.addDonor(donorPayload));
+    },
+    signOutUser: () => {
+      return dispatch(AuthActions.SignOutUser());
     }
   };
 };

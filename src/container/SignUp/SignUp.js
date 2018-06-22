@@ -2,6 +2,12 @@ import React, { Component } from "react";
 import AuthActions from "../../Store/Actions/AuthActions";
 import { connect } from "react-redux";
 import { AuthEpic } from "../../Store/Epics/AuthEpic";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -30,39 +36,117 @@ class SignUp extends Component {
     };
     console.log(userInfo);
     this.props.createUser(userInfo)
-    this.setState({ emailInput: "", passInput: "", nameInput: "",registerButtonDisable:true });
+    // this.setState({ emailInput: "", passInput: "", nameInput: "",registerButtonDisable:true });
   }
   render(){
     // console.log(this.props.user);
     return (
       <div>
-        <div>
-          <input
-            onChange={this.inputHandler}
-            type="text"
-            placeholder="Enter name"
-            name="nameInput"
-          />
-        </div>
-        <div>
-          <input
-            onChange={this.inputHandler}
-            type="email"
-            placeholder="Enter email"
-            name="emailInput"
-          />
-        </div>
-        <div>
-          <input
-            onChange={this.inputHandler}
-            type="password"
-            placeholder="Enter password"
-            name="passInput"
-          />
-        </div>
-        <div>
-          <button onClick={this.registerHandler} disabled={this.state.registerButtonDisable} >Register</button>
-        </div>
+       <AppBar
+          position="static"
+          color="default"
+          style={{ backgroundColor: "#E53935" }}
+        >
+          <Toolbar>
+            <Typography
+              variant="title"
+              color="inherit"
+              style={{ color: "#FFF" }}
+            >
+              Blood App
+            </Typography>
+          </Toolbar>
+        </AppBar>
+         
+          <Grid container  direction="row" justify="center" >
+          <Grid  item xs={12} md={6} >
+            <TextField
+              required
+              fullWidth
+              id="name"
+              label="Name"
+              className="nameInput"
+              onChange={this.inputHandler}
+              name="nameInput"
+              margin="normal"
+              value={this.state.nameInput}
+              disabled={this.props.isLoading}
+            />
+          </Grid>
+          </Grid>
+       
+       
+         
+           <Grid container  direction="row" justify="center" >
+          <Grid  item xs={12} md={6} >
+            <TextField
+              required
+              fullWidth
+              id="email"
+              label="Email"
+              className="emailInput"
+              onChange={this.inputHandler}
+              name="emailInput"
+              margin="normal"
+              value={this.state.emailInput}
+              disabled={this.props.isLoading}
+            />
+          </Grid>
+          </Grid>
+          
+        
+        
+          
+          <Grid container  direction="row" justify="center" >
+          <Grid xs={12} md={6}>
+            <TextField
+              required
+              fullWidth
+              id="password-input"
+              label="Password"
+              className="passInput"
+              type="password"
+              autoComplete="current-password"
+              margin="normal"
+              name="passInput"
+              onChange={this.inputHandler}
+              value={this.state.passInput}
+              disabled={this.props.isLoading}
+            />
+          </Grid>
+          </Grid>
+        
+        
+          
+          <Grid container  direction="row" justify="center" >
+          <Grid item xs={1} md={1}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={this.registerHandler}
+              className="signUpBtn"
+              disabled={this.props.isLoading}
+            >
+              SignUp
+            </Button>
+          </Grid>
+          </Grid>
+
+
+          <Grid container  direction="row" justify="center" >
+          <a onClick={(this.props.isLoading)?"":
+              () => {
+              this.props.history.replace("/");
+            }}  >
+          <Typography variant="body1"  align="center" style={{color:"red",padding:"20px"}} >
+        Already have an account? SignIn here
+      </Typography>
+
+          
+          
+          </a>
+          </Grid>
+
       </div>
     );
   }

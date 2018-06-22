@@ -4,5 +4,7 @@ import Routing from './Routing';
 import registerServiceWorker from './registerServiceWorker';
 import {Provider} from 'react-redux';
 import {store}from './Store/index';
-ReactDOM.render(<Provider store={store} ><Routing /></Provider>, document.getElementById('root'));
+import Loader from "./Component/Loader";
+import Error from "./Component/Error";
+ReactDOM.render(<Provider store={store} ><div><Loader /><Routing /><Error /></div></Provider>, document.getElementById('root'));
 registerServiceWorker();
