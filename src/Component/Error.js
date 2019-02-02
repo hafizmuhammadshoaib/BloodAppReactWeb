@@ -14,6 +14,7 @@ constructor(props){
 
 }
 componentWillReceiveProps(nextProps){
+  console.log(nextProps);
     if(nextProps.isError){
         this.modalHandler(true);
       }
@@ -24,6 +25,7 @@ componentWillReceiveProps(nextProps){
     this.setState({ modalState: state });
   };
   render() {
+    // (this.props.isError)?()=>{console.log("true");this.modalHandler(true)}:()=>{console.log("false");this.modalHandler(false)};
     return (
       <Grid container direction="row" justify="center" style={{ padding: 50 }}>
         <Grid item xs={8}>

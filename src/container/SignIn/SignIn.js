@@ -103,7 +103,7 @@ class SignIn extends Component {
 
           
           <Grid container direction="row" justify="center">
-            <Grid xs={12} md={6}>
+            <Grid item xs={12} md={6}>
               <TextField
                 required
                 fullWidth
@@ -138,7 +138,7 @@ class SignIn extends Component {
         </Grid>
         <Grid container direction="row" justify="center">
           <a
-            onClick={(this.props.isLoading)?"":
+            onClick={(this.props.isLoading)?()=>{}:
               () => {
               this.props.history.replace("./signUp");
             }}
