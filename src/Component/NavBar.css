@@ -1,0 +1,84 @@
+.appBar {
+    display: flex;
+    background-color: #E53935;
+    box-shadow: 1px 3px 0px 2px #d3d3d3;
+    align-items: center;
+}
+
+.imageDiv {
+    padding: 10px;
+}
+
+.imageDiv:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.navDrawer {
+    width: 15vw;
+    height: 89vh;
+    background-color: #31363A;
+    position: fixed;
+    transition: transform 0.7s cubic-bezier(0, .72, 0, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navDrawerHide {
+    transform: translate3d(-100vw, 0, 0);
+    transition: 2s;
+}
+
+.navDrawerShow {
+    transform: translate3d(0vw, 0, 0);
+}
+
+.drawerItem {
+    color: #fff;
+    width: 14vw;
+    display: block;
+    height: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.drawerItemSelected {
+    background-color: #404040;
+    border-left: 2px solid;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.drawerItem:hover {
+    background-color: #404040;
+    border-left: 2px solid;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.signOutBtnParent {
+    flex: 1
+}
+
+.signOutBtn {
+    float: right;
+    color: #fff !important;
+    font-weight: 600 !important;
+}
+
+@media screen and (max-width: 1204px) {
+    .drawerItem {
+        font-size: 0.7em;
+    }
+    .signOutBtn {
+        float: right;
+        color: #fff !important;
+        font-size: 0.7em !important;
+        font-weight: 600 !important;
+    }
+    .signOutBtnParent {
+        flex: 0.93
+    }
+}

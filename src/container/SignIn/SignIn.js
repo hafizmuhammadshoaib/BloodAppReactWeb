@@ -21,7 +21,8 @@ class SignIn extends Component {
   inputHandler = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
-  signInHandler = () => {
+  signInHandler = (e) => {
+    e.preventDefault();
     let userInfo = {
       email: this.state.emailInput,
       pass: this.state.passInput
@@ -37,19 +38,19 @@ class SignIn extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.user) {
       this.props.history.replace("/home");
-    } 
-    if(nextProps.isError){
+    }
+    if (nextProps.isError) {
       this.modalHandler(true);
     }
-    
+
   }
-  modalHandler=(state)=>{
-    this.setState({modalState:state})
+  modalHandler = (state) => {
+    this.setState({ modalState: state })
   }
   getModalStyle() {
     const top = 50 + Math.round(Math.random() * 20) - 10;;
     const left = 50 + Math.round(Math.random() * 20) - 10;;
-  
+
     return {
       top: `${top}%`,
       left: `${left}%`,
@@ -60,99 +61,54 @@ class SignIn extends Component {
   render() {
     return (
       <div>
-        <AppBar
-          position="static"
-          color="default"
-          style={{ backgroundColor: "#E53935" }}
-        >
-          <Toolbar>
-            <Typography
-              variant="title"
-              color="inherit"
-              style={{ color: "#FFF" }}
-            >
-              Blood App
-            </Typography>
-          </Toolbar>
-        </AppBar>
-   
-
-
-
-
-
-        
-
-        <Grid style={{}} container direction="column" alignItems="center">
-          <Grid container direction="row" justify="center">
-            <Grid item xs={12} md={6}>
-              <TextField
-                required
-                fullWidth
-                id="email"
-                label="Email"
-                className="emailInput"
-                onChange={this.inputHandler}
-                name="emailInput"
-                margin="normal"
-                value={this.state.emailInput}
-                disabled={this.props.isLoading}
-              />
-            </Grid>
-          </Grid>
-
-          
-          <Grid container direction="row" justify="center">
-            <Grid item xs={12} md={6}>
-              <TextField
-                required
-                fullWidth
-                id="password-input"
-                label="Password"
-                className="passInput"
-                type="password"
-                autoComplete="current-password"
-                margin="normal"
-                name="passInput"
-                onChange={this.inputHandler}
-                value={this.state.passInput}
-                disabled={this.props.isLoading}
-              />
-            </Grid>
-          </Grid>
-
-          
-          <Grid container direction="row" justify="center">
-            <Grid item xs={1} md={1}>
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={this.signInHandler}
-                className="signInBtn"
-                disabled={this.props.isLoading}
-              >
-                SignIn
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid container direction="row" justify="center">
-          <a
-            onClick={(this.props.isLoading)?()=>{}:
-              () => {
-              this.props.history.replace("./signUp");
-            }}
-           
-          >
-            <Typography
-              variant="body1"
-              align="center"
-              style={{ color: "blue", padding: "20px" }}
-            >
-              Don't have an account? SignUp here
-            </Typography>
-          </a>
-        </Grid>
+        <div className="appBar"  >
+          <h2 className="headingText" >Blood App</h2>
+        </div>
+        <div className="parentDiv" >
+          <div className="formParentStyle"  >
+            <form onSubmit={this.signInHandler} >
+              <div className="inputParentStyles" >
+                <input
+                  id="email"
+                  className="emailInput input"
+                  placeholder="Email"
+                  onChange={this.inputHandler}
+                  name="emailInput"
+                  value={this.state.emailInput}
+                  disabled={this.props.isLoading}
+                />
+              </div>
+              <div className="inputParentStyles" >
+                <input
+                  required
+                  id="password-input"
+                  placeholder="Password"
+                  label="Password"
+                  className="passInput input"
+                  type="password"
+                  name="passInput"
+                  onChange={this.inputHandler}
+                  value={this.state.passInput}
+                  disabled={this.props.isLoading}
+                />
+              </div>
+              <div id="signInDiv" >
+                <button id="signInButton"
+                  disabled={this.props.isLoading}
+                  type="submit"
+                >
+                  SignIn
+              </button>
+              </div>
+            </form>
+            <div id="anchorDiv" >
+              <a style={{ color: "#1e3799" }}
+                onClick={(this.props.isLoading) ? () => { } : () => { this.props.history.replace("./signUp"); }}>
+                Don't have an account? SignUp here
+                </a>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

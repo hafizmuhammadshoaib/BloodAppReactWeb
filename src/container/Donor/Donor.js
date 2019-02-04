@@ -12,7 +12,7 @@ import AuthActions from "../../Store/Actions/AuthActions";
 class Donor extends Component {
   constructor(props) {
     super(props);
-    this.state = { numbInput: "", bloodGroupInput: "" };
+    this.state = { numbInput: "", bloodGroupInput: "", openDrawer: false };
   }
   componentWillReceiveProps(nextProps) {
     if (!nextProps.user) {
@@ -21,7 +21,7 @@ class Donor extends Component {
   }
   inputHandler = event => {
     this.setState({ [event.target.name]: event.target.value });
-    
+
   };
 
   buttonHandler = () => {
@@ -51,12 +51,13 @@ class Donor extends Component {
   render() {
     console.log(this.state.bloodGroupInput);
     return (
-      <div>
+      <div onMouseDown={()=>this.toggleDrawer(false)} >
         <NavBar
+          listArrayItem={[{ name: "Home", selected: false }, { name: "Donate Blood", selected: true }, { name: "Need Donor", selected: false }]}
           openDrawer={this.state.openDrawer}
           toggleDrawer={this.toggleDrawer}
           listHandler={this.listHandler}
-          userName={this.props.user?this.props.user.displayName:""}
+          userName={this.props.user ? this.props.user.displayName : ""}
           signOut={this.props.signOutUser}
         />
         <Grid
@@ -75,7 +76,7 @@ class Donor extends Component {
               disabled={true}
               name="nameInput"
               margin="normal"
-              value={this.props.user?this.props.user.displayName:""}
+              value={this.props.user ? this.props.user.displayName : ""}
             />
           </Grid>
         </Grid>
@@ -95,7 +96,7 @@ class Donor extends Component {
               disabled={true}
               name="emailInput"
               margin="normal"
-              value={this.props.user?this.props.user.email:""}
+              value={this.props.user ? this.props.user.email : ""}
             />
           </Grid>
         </Grid>
@@ -121,38 +122,42 @@ class Donor extends Component {
             />
           </Grid>
         </Grid>
-        <Grid
+        {/* <Grid
           container
           direction="row"
           justify="center"
           style={{ padding: 10 }}
-        >
-          <Grid item xs={8} >
+        > */}
+        {/* <Grid item xs={8} > */}
+        <div style={{ display: "flex", justifyContent: "center", padding: "15px" }} >
           <Selector valueInput={this.state.bloodGroupInput} name={"bloodGroupInput"} changeHandler={this.inputHandler} />
-        </Grid>
-        </Grid>
-        
+        </div>
+        {/* </Grid> */}
+        {/* </Grid> */}
 
-       
+
+        {/*        
         <Grid
           container
           direction="row"
           justify="center"
           style={{ padding:10,  }} 
         >
-          <Grid item xs={8}  >
-            <Button
-              variant="contained"
-              size="large"
-              color="primary"
-              style={{ backgroundColor: "#EF5350" }}
-              onClick={this.buttonHandler}
-            >
+          <Grid item xs={8}  > */}
+        <div style={{ display: "flex", justifyContent: "center" }} >
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            style={{ backgroundColor: "#EF5350" }}
+            onClick={this.buttonHandler}
+          >
             Donate Blood
              <Icon ></Icon>
-            </Button>
-          </Grid>
-          </Grid>
+          </Button>
+        </div>
+        {/* </Grid>
+          </Grid> */}
       </div>
     );
   }

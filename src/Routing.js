@@ -1,20 +1,20 @@
-import React,{Component}from 'react';
+import React, { Component } from 'react';
 import {
     BrowserRouter as Router,
     Route,
     Link
-  } from 'react-router-dom';
-  import Home from './container/Home/Home';
-  import Donor from './container/Donor/Donor';
-  import SignIn from './container/SignIn/SignIn';
-  import SignUp from './container/SignUp/SignUp';
-  import Needer from './container/Needer/Needer';
+} from 'react-router-dom';
+import Home from './container/Home/Home';
+import Donor from './container/Donor/Donor';
+import SignIn from './container/SignIn/SignIn';
+import SignUp from './container/SignUp/SignUp';
+import Needer from './container/Needer/Needer';
 
-  export default class Routing extends Component{
-    render(){
-        return(
+export default class Routing extends Component {
+    render() {
+        return (
             <Router>
-                <div>
+                <div style={{ height: "100%" }} >
                     {/* <ul>
                         <li><Link to="/" >Home</Link></li>
                         <li><Link to="/about">About</Link></li>
@@ -26,7 +26,7 @@ import {
                     <Route path="/needer" component={Needer} />
                     <Route path="/home" component={Home} />
                 </div>
-                </Router>
+            </Router>
         )
     }
-  }
+}

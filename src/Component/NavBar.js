@@ -13,16 +13,37 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/Inbox";
 import Person from "@material-ui/icons/Person";
 import Divider from "@material-ui/core/Divider";
+import "./NavBar.css";
 
 export default class NavBar extends Component {
-  
+  constructor(props) {
+    super(props);
+    this.state = { openDrawer: false, listArrayItem: [{ name: "Home", selected: true }, { name: "Donate Blood", selected: false }, { name: "Need Donor", selected: false }] };
+
+  }
+  toggleDrawer = () => {
+    this.setState({ openDrawer: !this.state.openDrawer })
+  }
+  selectionHandler = (index) => {
+    let array = [...this.props.listArrayItem];
+    // for (let i = 0; i < array.length; i++) {
+    //   if (i == index)
+    //     array[i].selected = true;
+    //   else
+    //     array[i].selected = false;
+    // }
+    this.props.listHandler(array[index].name)
+    // this.setState({ listArrayItem: array });
+
+  }
   render() {
+
     return (
       <div>
-        <AppBar position="static" style={{ backgroundColor: "#E53935" }}>
+        {/* <AppBar position="static" style={{ backgroundColor: "#E53935" }}>
           <Toolbar>
             <IconButton
-              onClick={()=>this.props.toggleDrawer(true)}
+              onClick={() => this.props.toggleDrawer(true)}
               style={{
                 marginLeft: -12,
                 marginRight: 20
@@ -45,12 +66,12 @@ export default class NavBar extends Component {
           </Toolbar>
         </AppBar>
 
-        <Drawer open={this.props.openDrawer} onClose={()=>this.props.toggleDrawer(false)}>
+        <Drawer open={this.props.openDrawer} onClose={() => this.props.toggleDrawer(false)}>
           <div
             tabIndex={0}
             role="button"
-            onClick={()=>this.props.toggleDrawer(false)}
-            onKeyDown={()=>this.props.toggleDrawer(false)}
+            onClick={() => this.props.toggleDrawer(false)}
+            onKeyDown={() => this.props.toggleDrawer(false)}
           >
             <List component="nav">
               <ListItem>
@@ -75,7 +96,35 @@ export default class NavBar extends Component {
               );
             })}
           </div>
-        </Drawer>
+        </Drawer> */}
+
+        <div className="appBar">
+          <div className="imageDiv" onClick={() => this.props.toggleDrawer(true)}  >
+            <img src={require("../assets/images/menu.png")} width="25px" height="30px" />
+          </div>
+          <h2 className="headingText" >Blood App</h2>
+          <div className="signOutBtnParent" >
+            <Button
+              className="signOutBtn"
+              color="#fff"
+              onClick={this.props.signOut}
+            >
+              SignOut
+            </Button>
+          </div>
+        </div>
+        <div className={`navDrawer ${this.props.openDrawer ? "navDrawerShow" : "navDrawerHide"}`}  >
+          {this.props.listArrayItem.map((value, index) => {
+            return (
+
+              <span className={`drawerItem ${this.props.listArrayItem[index].selected && "drawerItemSelected"}`} onClick={() => { this.selectionHandler(index) }} >
+                {value.name}</span>
+            );
+          })}
+        </div>
+
+
+
       </div>
     );
   }

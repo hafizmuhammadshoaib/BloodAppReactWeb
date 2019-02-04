@@ -11,13 +11,14 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = { openDrawer: false };
+
   }
   componentWillReceiveProps(nextProps) {
     if (!nextProps.user) {
       this.props.history.replace("/");
     }
   }
-  toggleDrawer = open => {
+  toggleDrawer = (open) => {
     this.setState({ openDrawer: open });
   };
   listHandler = text => {
@@ -31,29 +32,30 @@ class Home extends Component {
     }
   };
   render() {
+
     return (
-      <div>
+      <div onMouseDown={() => this.toggleDrawer(false)} >
         <NavBar
+          listArrayItem={[{ name: "Home", selected: true }, { name: "Donate Blood", selected: false }, { name: "Need Donor", selected: false }]}
           openDrawer={this.state.openDrawer}
           toggleDrawer={this.toggleDrawer}
           listHandler={this.listHandler}
-          userName={this.props.user?this.props.user.displayName:""}
-          signOut={this.props.signOutUser}
-        />
+          userName={this.props.user ? this.props.user.displayName : ""}
+          signOut={this.props.signOutUser} />
 
-       
+
         <Grid
           container
           direction="row"
           justify="center"
-          style={{ padding:50,  }} 
+          style={{ padding: 50, }}
         >
           <Grid item xs={1}  >
             <Button
               variant="contained"
               size="large"
               color="primary"
-              style={{ backgroundColor: "#EF5350" ,fontWeight:"bold"}}
+              style={{ backgroundColor: "#EF5350", fontWeight: "bold" }}
               onClick={() => {
                 this.props.history.replace("/donor");
               }}
@@ -74,14 +76,14 @@ class Home extends Component {
           container
           direction="row"
           justify="center"
-          style={{padding:50, }}
+          style={{ padding: 50, }}
         >
           <Grid item xs={1}>
             <Button
               variant="contained"
               size="large"
               color="primary"
-              style={{ backgroundColor: "#E040FB",fontWeight:"bold" }}
+              style={{ backgroundColor: "#E040FB", fontWeight: "bold" }}
               onClick={() => {
                 this.props.history.replace("/needer");
               }}
@@ -91,8 +93,8 @@ class Home extends Component {
           </Grid>
         </Grid>
 
-        
-      </div>
+
+      </ div>
     );
   }
 }

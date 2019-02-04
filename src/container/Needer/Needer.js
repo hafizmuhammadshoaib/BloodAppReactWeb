@@ -12,10 +12,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import AuthActions from "../../Store/Actions/AuthActions";
+import "./Needer.css";
 class Needer extends Component {
   constructor(props) {
     super(props);
-    this.state = { bloodInput: "", renderArray: [],openDrawer:false };
+    this.state = { bloodInput: "", renderArray: [], openDrawer: false };
   }
   componentWillReceiveProps(nextProps) {
     if (!nextProps.user) {
@@ -109,85 +110,55 @@ class Needer extends Component {
       console.log("", this.state.renderArray);
     }
     return (
-      <div>
-         <NavBar
+      <div onMouseDown={() => this.toggleDrawer(false)} style={{ height: "100%",  }} >
+        <NavBar
+          listArrayItem={[{ name: "Home", selected: false }, { name: "Donate Blood", selected: false }, { name: "Need Donor", selected: true }]}
           openDrawer={this.state.openDrawer}
           toggleDrawer={this.toggleDrawer}
           listHandler={this.listHandler}
-          userName={this.props.user?this.props.user.displayName:""}
+          userName={this.props.user ? this.props.user.displayName : ""}
           signOut={this.props.signOutUser}
         />
-        
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          style={{ padding: 10 }}
-        >
-        <Selector name="bloodInput" valueInput={this.state.bloodInput} changeHandler={this.inputHandler} />
-        </Grid>
-       
-        
-        
-
-<Grid
-          container
-          direction="row"
-          justify="center"
-          style={{padding:50, }}
-        >
-          <Grid item xs={1}>
+        <div style={{ display: "flex", flexDirection: "column", height: "35vh", justifyContent: "space-around", alignItems: "center" }} >
+          <div style={{ height: "12vh", alignItems: "center" }} >
+            <Selector name="bloodInput" valueInput={this.state.bloodInput} changeHandler={this.inputHandler} />
+          </div>
+          <div style={{ height: "10vh" }} >
             <Button
               variant="contained"
               size="large"
               color="primary"
-              style={{ backgroundColor: "#E040FB",fontWeight:"bold" }}
+              style={{ backgroundColor: "#E040FB", fontWeight: "bold" }}
               onClick={this.checkDonors}
             >
               Find Donor
             </Button>
-          </Grid>
-        </Grid>
-       
-<Grid
-          container
-          direction="row"
-          justify="center"
-          style={{padding:50, }}
-        >
-<Grid item xs={12}>
-        <Paper >
-      <Table >
-        <TableHead>
-          <TableRow>
-            <TableCell>Blood Group</TableCell>
-            <TableCell >Name</TableCell>
-            <TableCell >Email</TableCell>
-            <TableCell numeric>Phone Number</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {this.state.renderArray.map((obj,index) => {
-            return (
-              <TableRow key={index}>
-                <TableCell component="th" scope="row">
-                  {obj.bloodGroup}
-                </TableCell>
-                <TableCell >{obj.name}</TableCell>
-                <TableCell >{obj.email}</TableCell>
-                <TableCell numeric>{obj.phoneNumber}</TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </Paper>
-</Grid>
-</Grid>
-
-
-
-
+          </div>
+        </div>
+        <div style={{ display: "flex", justifyContent: "center", }} >
+          <table style={{ width: "70vw", }} >
+            <thead>
+              <tr>
+                <th>Blood Group</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+              </tr>
+              {this.state.renderArray.map((obj, index) => {
+                return (
+                  <tr key={index}>
+                    <td component="th" scope="row">
+                      {obj.bloodGroup}
+                    </td>
+                    <td >{obj.name}</td>
+                    <td >{obj.email}</td>
+                    <td numeric>{obj.phoneNumber}</td>
+                  </tr>
+                );
+              })}
+            </thead>
+          </table>
+        </div>
       </div>
     );
   }
